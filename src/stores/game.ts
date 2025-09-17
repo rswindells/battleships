@@ -8,6 +8,9 @@ export const useGameStore = defineStore('game', () => {
   const NUM_ROWS = 10;
   const cells = ref<Grid>();
   const columnHeaders = getAlphabetSubset(NUM_ROWS);
+  const status = ref<'idle' | 'in_progress' | 'game_over'>('idle');
+  const finished = computed(() => status.value === 'game_over');
+  const shotsFired = ref(new Set<string>());
 
   function initGame() {
     // Initialize game state
@@ -16,6 +19,10 @@ export const useGameStore = defineStore('game', () => {
 
   function resetGame() {
     // Reset game state
+  }
+
+  function attack(position: string) {
+    // Handle attack logic
   }
 
   function generateGridArray(rows: number, cols: number): Cell[][] {
@@ -37,7 +44,10 @@ export const useGameStore = defineStore('game', () => {
     columnHeaders,
     cells,
     initGame,
-    // resetGame, --- IGNORE ---
-    // makeMove, --- IGNORE ---
+    status,
+    finished,
+    attack,
+    shotsFired,
+    resetGame,
   };
 });

@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { useGameStore } from './stores/game';
-import BattleGrid from '@/components/BattleGrid.vue';
 import { onMounted } from 'vue';
+import { useGameStore } from './stores/game';
+
+import BattleGrid from '@/components/BattleGrid.vue';
+import BattleForm from '@/components/BattleForm.vue';
+
 const gameStore = useGameStore();
 onMounted(() => {
   gameStore.initGame();
@@ -9,13 +12,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
-  <div>
+  <header class="p-4 bg-blue-800 text-white text-center">
+    <h1 class="text-4xl font-bold text-center">Battleship Demo</h1>
+  </header>
+  <div class="flex flex-col items-center gap-4 mt-8">
     <BattleGrid class="" />
+    <BattleForm class="" />
   </div>
 </template>
 
