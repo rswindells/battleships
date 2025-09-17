@@ -1,5 +1,11 @@
 <script setup lang="ts">
+import { useGameStore } from './stores/game';
 import BattleGrid from '@/components/BattleGrid.vue';
+import { onMounted } from 'vue';
+const gameStore = useGameStore();
+onMounted(() => {
+  gameStore.initGame();
+});
 </script>
 
 <template>
