@@ -2,14 +2,19 @@
 
 Demo project for a one-sided game of battleships.
 
+To debug, enter toggleDebug() in the console to see the location of the ships
+
 Improvements
 
 - max number of shots
 - timer
 - ensure a minimum of 1 square gap between ships
-- configuration (number of ships etc)
+- configuration (number of ships, cols/rows etc)
 - allow diagonals
 - ensure that there's at least one ship in a different orientation
+- 2 player
+- websockets for 2 player
+- e2e testing
 
 ## Project Setup
 
