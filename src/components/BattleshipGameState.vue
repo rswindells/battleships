@@ -21,6 +21,7 @@ const gameStore = useGameStore();
               'bg-amber-100 text-amber-600': ship.hits > 0 && !ship.isDestroyed,
               'bg-green-100 text-green-600': ship.hits === 0 && !ship.isDestroyed,
             }"
+            data-testid="battle-ship-status"
           >
             {{ ship.isDestroyed ? 'Destroyed' : 'Intact' }}
           </span>

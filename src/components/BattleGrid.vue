@@ -35,7 +35,7 @@ window.toggleDebug = toggleDebug;
           v-for="(cell, colIndex) in row"
           :key="colIndex"
           data-testid="grid-cell"
-          class="w-10 h-10 border border-gray-400 hover:bg-blue-200 transition-colors duration-150 cursor-pointer"
+          class="size-10 border border-gray-400 hover:bg-blue-200 transition-colors duration-150 cursor-pointer"
           :class="{
             'bg-green-100': (debug && cell.state === 'ship') || (debug && cell.state === 'hit'),
             'bg-red-500': cell.state === 'hit',

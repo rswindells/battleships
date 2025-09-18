@@ -70,7 +70,8 @@ describe('BattleshipGameState', () => {
       global: { plugins: [pinia] },
     });
 
-    const statusElements = wrapper.findAll('.text-sm.px-2.py-1.rounded');
+    const shipStatusSelector = '[data-testid="battle-ship-status"]';
+    const statusElements = wrapper.findAll(shipStatusSelector);
 
     // 0 hits
     expect(statusElements[0].classes()).toContain('bg-green-100');

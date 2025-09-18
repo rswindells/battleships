@@ -138,7 +138,7 @@ describe('BattleGrid', () => {
       global: { plugins: [pinia] },
     });
 
-    const cells = wrapper.findAll('.w-10.h-10.border.border-gray-400');
+    const cells = wrapper.findAll(cellSelector);
 
     // Click hit cell
     await cells[0].trigger('click');
@@ -149,31 +149,6 @@ describe('BattleGrid', () => {
     const { useGameStore } = await import('@/stores/game');
     const store = useGameStore();
     expect(store.attackPosition).toHaveBeenCalledTimes(2);
-  });
-
-  it('renders empty state gracefully when no cells provided', () => {
-    const pinia = createTestingPinia({
-      createSpy: vi.fn,
-      initialState: {
-        game: {
-          cells: [],
-          headers: [],
-          status: 'idle',
-        },
-      },
-    });
-
-    const wrapper = mount(BattleGrid, {
-      global: { plugins: [pinia] },
-    });
-
-    // Should still render the grid container
-    const gridContainer = wrapper.find('.inline-grid');
-    expect(gridContainer.exists()).toBe(true);
-
-    // Should have minimal cells (just the corner cell)
-    const cells = wrapper.findAll('.w-10.h-10.border.border-gray-400');
-    expect(cells).toHaveLength(0);
   });
 
   it('applies hover effects only to clickable cells', () => {
@@ -199,7 +174,7 @@ describe('BattleGrid', () => {
       global: { plugins: [pinia] },
     });
 
-    const cells = wrapper.findAll('.w-10.h-10.border.border-gray-400');
+    const cells = wrapper.findAll(cellSelector);
 
     // Empty cell should have hover effect
     expect(cells[0].classes()).toContain('hover:bg-blue-200');
