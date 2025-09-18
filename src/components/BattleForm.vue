@@ -11,7 +11,6 @@ const inputValue = ref('');
 const errorMessage = ref('');
 const hasError = computed(() => Boolean(errorMessage.value));
 
-// todo
 function isValidCoordinate(coord: string): boolean {
   const regex = /^[A-J](10|[1-9])$/;
   return regex.test(coord);
@@ -45,9 +44,10 @@ function clearError(): void {
 <template>
   <form
     @submit.prevent="selectTarget"
-    class="bg-gray-50 border border-gray-100 shadow-md rounded p-5 my-5 max-w-lg mx-auto"
+    class="bg-gray-50 border border-gray-100 shadow-md rounded p-5 max-w-lg"
   >
     <h2 class="text-2xl font-bold text-center mb-4 text-slate-700">Choose Your Target</h2>
+
     <div class="mb-4">
       <BaseAlert
         title="Enter a coordinate by clicking the grid or typing below"
