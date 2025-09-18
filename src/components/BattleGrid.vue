@@ -19,15 +19,15 @@ window.toggleDebug = toggleDebug;
     >
       <div class="bg-blue-800"></div>
       <div
-        v-for="col in gameStore.columnHeaders"
+        v-for="(col, index) in gameStore.headers"
         :key="col"
         class="bg-blue-800 text-white size-10 grid place-items-center"
       >
-        {{ col }}
+        {{ index + 1 }}
       </div>
       <template v-for="(row, rowIndex) in gameStore.cells" :key="rowIndex">
         <div class="bg-blue-800 text-white size-10 grid place-items-center">
-          {{ rowIndex + 1 }}
+          {{ gameStore.headers[rowIndex] }}
         </div>
         <div
           v-for="(cell, colIndex) in row"

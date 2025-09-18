@@ -29,7 +29,16 @@ function selectTarget(): void {
     return;
   }
 
-  // todo
+  try {
+    gameStore.attackByCoordinate(coordinate);
+  } catch (error) {
+    if (error instanceof Error) {
+      showError(error.message);
+    } else {
+      showError('An unexpected error occurred.');
+    }
+    return;
+  }
 }
 
 function showError(message: string): void {
@@ -64,21 +73,12 @@ function clearError(): void {
               v-model="inputValue"
               placeholder="e.g. A1"
               :hasError
-              @keyup.enter="selectTarget"
               @input="clearError"
               :disabled="gameStore.finished"
               :maxlength="3"
             />
           </label>
-          <BaseButton
-            type="submit"
-            variant="primary"
-            :disabled="!inputValue || gameStore.finished"
-            @click="selectTarget"
-          >
-            <template #icon>
-              <span role="img" aria-label="gun">🔫</span>
-            </template>
+          <BaseButton type="submit" variant="primary" :disabled="!inputValue || gameStore.finished">
             Submit
           </BaseButton>
         </div>
