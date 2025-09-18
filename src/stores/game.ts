@@ -7,7 +7,7 @@ import { SHIP_TYPES } from '@/constants/game';
 export const useGameStore = defineStore('game', () => {
   const NUM_COLS = 10;
   const NUM_ROWS = 10;
-  const cells = ref<Grid>();
+  const cells = ref<Grid>([]);
   const headers = getAlphabetSubset(NUM_ROWS);
   const status = ref<'idle' | 'in_progress' | 'game_over'>('idle');
   const finished = computed(() => status.value === 'game_over');
@@ -36,7 +36,6 @@ export const useGameStore = defineStore('game', () => {
   function attackByCoordinate(coordinate: Cell['position']) {
     const cell = cells.value?.flatMap((row) => row).find((c) => c.position === coordinate);
     if (cell) {
-      console.log('Attacking position:', cell);
       if (cell.state === 'hit' || cell.state === 'miss') {
         throw new Error('Position already attacked');
       }
