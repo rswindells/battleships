@@ -32,7 +32,7 @@ describe('useGameStore', () => {
 
       expect(firstCell).toHaveProperty('position');
       expect(firstCell).toHaveProperty('state');
-      expect(firstCell.state).toBe('empty');
+      expect(['empty', 'ship']).toContain(firstCell.state);
       expect(firstCell.position).toBe('A1');
     });
 

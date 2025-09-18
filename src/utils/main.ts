@@ -12,4 +12,7 @@ function isValidCoordinate(coord: string): boolean {
   return regex.test(coord.toUpperCase());
 }
 
+export function isNonEmptyString(value: unknown): boolean {
+  return typeof value === 'string' && value.trim() !== '';
+}
 export { getAlphabetSubset, getNumberSubset, isValidCoordinate };

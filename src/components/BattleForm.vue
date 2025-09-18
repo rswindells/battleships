@@ -5,32 +5,24 @@ import BaseInput from './BaseInput.vue';
 import BaseButton from './BaseButton.vue';
 import BaseAlert from './BaseAlert.vue';
 import { useFormValidation } from '@/composables/useFormValidation';
-import { isValidCoordinate } from '@/utils/main';
+import { isValidCoordinate, isNonEmptyString } from '@/utils/main';
 
 const gameStore = useGameStore();
 
-const {
-  value: inputValue,
-  errorMessage,
-  hasError,
-  validate,
-  clearError,
-  showError,
-} = useFormValidation(
+const { inputValue, errorMessage, hasError, validate, clearError, showError } = useFormValidation(
   new Map([
+    [isNonEmptyString, 'Please enter coordinates'],
     [isValidCoordinate, 'Invalid coordinates. Must be of the format "A1".'],
-    [(value) => value.trim() === '', 'Please enter coordinates'],
   ]),
 );
 
 function selectTarget(): void {
-  const coordinate = inputValue.value;
-
   if (!validate()) {
     return;
   }
 
   try {
+    const coordinate = inputValue.value;
     gameStore.attackByCoordinate(coordinate);
   } catch (error) {
     if (error instanceof Error) {
@@ -77,7 +69,7 @@ watch(
             <span class="block mb-2">Grid coordinates:</span>
             <BaseInput
               id="coordinate-input"
-              v-model.trim="inputValue"
+              v-model="inputValue"
               placeholder="e.g. A1"
               :hasError
               @input="clearError"

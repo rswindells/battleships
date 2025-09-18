@@ -16,22 +16,25 @@ window.toggleDebug = toggleDebug;
   <div>
     <div
       class="inline-grid grid-cols-[auto_repeat(10,2.5rem)] gap-0 border border-blue-800 rounded-lg overflow-hidden select-none"
+      data-testid="grid-container"
     >
       <div class="bg-blue-800"></div>
       <div
         v-for="(col, index) in gameStore.headers"
         :key="col"
         class="bg-blue-800 text-white size-10 grid place-items-center"
+        data-testid="grid-col"
       >
         {{ index + 1 }}
       </div>
       <template v-for="(row, rowIndex) in gameStore.cells" :key="rowIndex">
-        <div class="bg-blue-800 text-white size-10 grid place-items-center">
+        <div class="bg-blue-800 text-white size-10 grid place-items-center" data-testid="grid-row">
           {{ gameStore.headers[rowIndex] }}
         </div>
         <div
           v-for="(cell, colIndex) in row"
           :key="colIndex"
+          data-testid="grid-cell"
           class="w-10 h-10 border border-gray-400 hover:bg-blue-200 transition-colors duration-150 cursor-pointer"
           :class="{
             'bg-green-100': (debug && cell.state === 'ship') || (debug && cell.state === 'hit'),

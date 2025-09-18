@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getAlphabetSubset, getNumberSubset, isValidCoordinate } from './main';
+import { getAlphabetSubset, getNumberSubset, isValidCoordinate, isNonEmptyString } from './main';
 
 describe('getAlphabetSubset', () => {
   it('returns correct subset for valid input', () => {
@@ -106,5 +106,36 @@ describe('isValidCoordinate', () => {
     expect(isValidCoordinate('A 1')).toBe(false);
     expect(isValidCoordinate(' A1')).toBe(false);
     expect(isValidCoordinate('A1 ')).toBe(false);
+  });
+});
+describe('isNonEmptyString', () => {
+  it('returns true for non-empty strings', () => {
+    expect(isNonEmptyString('hello')).toBe(true);
+    expect(isNonEmptyString('world')).toBe(true);
+    expect(isNonEmptyString('a')).toBe(true);
+    expect(isNonEmptyString('123')).toBe(true);
+  });
+
+  it('returns false for empty strings', () => {
+    expect(isNonEmptyString('')).toBe(false);
+  });
+
+  it('returns false for whitespace-only strings', () => {
+    expect(isNonEmptyString(' ')).toBe(false);
+    expect(isNonEmptyString('  ')).toBe(false);
+    expect(isNonEmptyString('\t')).toBe(false);
+    expect(isNonEmptyString('\n')).toBe(false);
+    expect(isNonEmptyString(' \t \n ')).toBe(false);
+  });
+
+  it('returns false for non-string values', () => {
+    expect(isNonEmptyString(null)).toBe(false);
+    expect(isNonEmptyString(undefined)).toBe(false);
+    expect(isNonEmptyString(123)).toBe(false);
+    expect(isNonEmptyString(0)).toBe(false);
+    expect(isNonEmptyString(true)).toBe(false);
+    expect(isNonEmptyString(false)).toBe(false);
+    expect(isNonEmptyString([])).toBe(false);
+    expect(isNonEmptyString({})).toBe(false);
   });
 });
