@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { watch } from 'vue';
 import { useGameStore } from '@/stores/game';
 import BaseInput from './BaseInput.vue';
 import BaseButton from './BaseButton.vue';
@@ -40,6 +41,20 @@ function selectTarget(): void {
     return;
   }
 }
+
+function clearForm(): void {
+  inputValue.value = '';
+  clearError();
+}
+
+watch(
+  () => gameStore.status,
+  (newStatus) => {
+    if (newStatus === 'game_over') {
+      clearForm();
+    }
+  },
+);
 </script>
 
 <template>
