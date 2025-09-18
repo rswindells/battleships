@@ -1,4 +1,3 @@
-// src/composables/useFormValidation.ts
 import { ref, computed, readonly } from 'vue';
 
 export function useFormValidation<T>(validationMap: Map<(value: T) => boolean, string>) {
