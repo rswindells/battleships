@@ -7,9 +7,10 @@ export interface Cell {
 
 export type Grid = Cell[][];
 
+export type ShipType = 'battleShip' | 'destroyer';
 export interface BattleShip {
   id: number;
-  type: string;
+  type: ShipType;
   size: number;
   positions: string[];
   hits: number;

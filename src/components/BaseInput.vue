@@ -16,7 +16,6 @@ defineProps<{
 
 <template>
   <input
-    id="coordinate-input"
     v-model="inputValue"
     type="text"
     class="px-4 py-3 border-2 border-gray-400 rounded-md text-base text-center transition-all duration-200 min-w-15 max-w-30 focus:outline-none focus:border-blue-500 disabled:bg-gray-100 disabled:text-gray-500 disabled:border-gray-300 disabled:cursor-not-allowed"

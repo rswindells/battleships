@@ -1,7 +1,8 @@
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { defineStore } from 'pinia';
 import type { BattleShip, Cell, Grid } from '@/types/main';
 import { getAlphabetSubset } from '@/utils/main';
+import { SHIP_TYPES } from '@/constants/game';
 
 export const useGameStore = defineStore('game', () => {
   const NUM_COLS = 10;
@@ -18,10 +19,6 @@ export const useGameStore = defineStore('game', () => {
   );
   const ships = ref<BattleShip[]>([]);
   const shipPositions = computed(() => ships.value.flatMap((ship) => ship.positions));
-  const shipTypes = {
-    battleShip: { size: 5 },
-    destroyer: { size: 4 },
-  };
 
   function initGame() {
     cells.value = generateGridArray(NUM_ROWS, NUM_COLS);
@@ -51,7 +48,6 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function attackPosition(cell: Cell) {
-    // Handle attackPosition logic
     if (status.value !== 'in_progress' || !cell.position) return;
 
     if (cell.state === 'ship') {
@@ -62,10 +58,6 @@ export const useGameStore = defineStore('game', () => {
         hitShip.hits++;
         if (hitShip.hits >= hitShip.size) {
           hitShip.isDestroyed = true;
-          // Check if all ships are destroyed
-          if (ships.value.every((ship) => ship.isDestroyed)) {
-            status.value = 'game_over';
-          }
         }
       }
     } else if (cell.state === 'empty') {
@@ -78,7 +70,7 @@ export const useGameStore = defineStore('game', () => {
       createShip({
         id: 1,
         type: 'battleShip',
-        size: shipTypes.battleShip.size,
+        size: SHIP_TYPES.battleShip.size,
         positions: [],
         hits: 0,
         isDestroyed: false,
@@ -88,7 +80,7 @@ export const useGameStore = defineStore('game', () => {
       createShip({
         id: 2,
         type: 'destroyer',
-        size: shipTypes.destroyer.size,
+        size: SHIP_TYPES.destroyer.size,
         positions: [],
         hits: 0,
         isDestroyed: false,
@@ -98,7 +90,7 @@ export const useGameStore = defineStore('game', () => {
       createShip({
         id: 3,
         type: 'destroyer',
-        size: shipTypes.destroyer.size,
+        size: SHIP_TYPES.destroyer.size,
         positions: [],
         hits: 0,
         isDestroyed: false,
@@ -209,6 +201,17 @@ export const useGameStore = defineStore('game', () => {
     );
   }
 
+  watch(
+    ships,
+    () => {
+      // Check if all ships are destroyed
+      if (ships.value.every((ship) => ship.isDestroyed)) {
+        status.value = 'game_over';
+      }
+    },
+    { deep: true },
+  );
+
   return {
     headers,
     cells,
@@ -219,18 +222,6 @@ export const useGameStore = defineStore('game', () => {
     attackByCoordinate,
     shotsFired,
     resetGame,
-
-    setupBattleShipPositions,
-    createShip,
-    getRandomInteger,
-    tryMaxAttempts,
-    getValidShipPosition,
-    isWithinBounds,
-    generateGridArray,
-    NUM_COLS,
-    NUM_ROWS,
     ships,
-    shipPositions,
-    shipTypes,
   };
 });
