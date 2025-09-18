@@ -6,4 +6,10 @@ function getNumberSubset(n: number): number[] {
   if (n < 1) throw new Error('n must be at least 1');
   return Array.from({ length: n }, (_, i) => i + 1);
 }
-export { getAlphabetSubset, getNumberSubset };
+
+function isValidCoordinate(coord: string): boolean {
+  const regex = /^[A-J](10|[1-9])$/;
+  return regex.test(coord.toUpperCase());
+}
+
+export { getAlphabetSubset, getNumberSubset, isValidCoordinate };

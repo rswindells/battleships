@@ -1,31 +1,31 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
 import { useGameStore } from '@/stores/game';
 import BaseInput from './BaseInput.vue';
 import BaseButton from './BaseButton.vue';
 import BaseAlert from './BaseAlert.vue';
+import { useFormValidation } from '@/composables/useFormValidation';
+import { isValidCoordinate } from '@/utils/main';
 
 const gameStore = useGameStore();
 
-const inputValue = ref('');
-const errorMessage = ref('');
-const hasError = computed(() => Boolean(errorMessage.value));
-
-function isValidCoordinate(coord: string): boolean {
-  const regex = /^[A-J](10|[1-9])$/;
-  return regex.test(coord);
-}
+const {
+  value: inputValue,
+  errorMessage,
+  hasError,
+  validate,
+  clearError,
+  showError,
+} = useFormValidation(
+  new Map([
+    [isValidCoordinate, 'Invalid coordinates. Must be of the format "A1".'],
+    [(value) => value.trim() === '', 'Please enter coordinates'],
+  ]),
+);
 
 function selectTarget(): void {
-  const coordinate = inputValue.value.trim().toUpperCase();
+  const coordinate = inputValue.value;
 
-  if (!coordinate) {
-    showError('Please enter coordinates');
-    return;
-  }
-
-  if (!isValidCoordinate(coordinate)) {
-    showError('Invalid coordinates. Must be of the format "A1".');
+  if (!validate()) {
     return;
   }
 
@@ -39,14 +39,6 @@ function selectTarget(): void {
     }
     return;
   }
-}
-
-function showError(message: string): void {
-  errorMessage.value = message;
-}
-
-function clearError(): void {
-  errorMessage.value = '';
 }
 </script>
 
@@ -70,7 +62,7 @@ function clearError(): void {
             <span class="block mb-2">Grid coordinates:</span>
             <BaseInput
               id="coordinate-input"
-              v-model="inputValue"
+              v-model.trim="inputValue"
               placeholder="e.g. A1"
               :hasError
               @input="clearError"
